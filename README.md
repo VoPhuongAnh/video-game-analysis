@@ -136,7 +136,12 @@ The project contain such folders as below:
 25. Generate charts for GitHub README or presentation
     
 <h3>Dependencies (requirements.txt)</h3>
-upcoming
+(upcoming)
+
+- pandas==1.5.3
+- numpy==1.24.2
+- matplotlib==3.7.1
+
 <h3>Contribution guidelines (if collaborative)</h3>
 
 If you find this analysis ineresting and would like to give your feedbacks for better improvement, please feel free to let me know via email chansoo194@gmail.com 
