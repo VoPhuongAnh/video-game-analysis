@@ -105,13 +105,156 @@ The project contain such folders as below:
 2. Import datasets:
 
     In this project, I use python script to  download the dataset using Kaggle API. The script is as below:
+
+   ```python
+   # Install Kaggle library
+    !pip install -q kaggle
+
+    # Upload kaggle.json
+    from google.colab import files
+    files.upload() # Select and upload your kaggle.json file
+
+    # Create .kaggle directory and set permissions
+    !mkdir -p ~/.kaggle
+    !cp kaggle.json ~/.kaggle/
+    !chmod 600 ~/.kaggle/kaggle.json
+
+    # Verify Kaggle API access
+    !kaggle datasets list
+
+   # Using Kaggle CLI to download datasets:
+    !kaggle datasets download -d gregorut/videogamesales
+
+   # Unzip the folder:
+    !unzip videogamesales.zip
+
+   # Import python libs & load dataframe:
    
-    You can also download the csv file to local folder to use.
+   import pandas as pd
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+
+    df = pd.read_csv('vgsales.csv')
+    df.head()
+   
+    ```
+   
+    You can also download the csv file to local folder to use but this shall need to save the file to colab folder each time of reconnect.
+
+
+   ```python
+    ## From Kaggle API
+   
+    # Install dependencies:
+    !pip install kagglehub[pandas-datasets]
+
+    # Set the path to the file
+    file_path = "vgsales.csv"
+
+    # Load the latest version
+    df = kagglehub.load_dataset(KaggleDatasetAdapter.PANDAS,"gregorut/videogamesales",file_path)
+
+    print("First 5 records:", df.head())
+   ```
 
 3. Handle missing data:
 
-   There are some records which null values in Year column. There are 2 solutions to solve this issue, that are remove all records with years are missing or fill them with a proper value.
-   In order to do the latter: I can think of fill them with the mode of Year column but the result might be affected. Another way is to mass research theỉ correct years. 
+We run this code to check total missing values (if any) in each columns:
+
+```python
+    # Check total null in each columns:
+    df.isnull().sum()
+```
+
+
+|              | **Total Missing values**   |
+|-------------:|-----|
+|     Rank     |   0 |
+|     Name     |   0 |
+|   Platform   |   0 |
+|     Year     | 271 |
+|     Genre    |   0 |
+|   Publisher  |  58 |
+|   NA_Sales   |   0 |
+|   EU_Sales   |   0 |
+|   JP_Sales   |   0 |
+|  Other_Sales |   0 |
+| Global_Sales |   0 |
+
+
+   3a. Handle missing value in Publisher column:
+
+   ```python
+        !pip install pandasql
+
+        import pandasql
+        from pandasql import sqldf
+
+        # Use SQL Query to filter all record with NaN in Publisher column from original df:
+        # For review only:
+
+        query1 = "SELECT * FROM df WHERE Publisher IS NULL"
+        publisher_missing_df = sqldf(query1)
+        publisher_missing_df.shape[0]
+
+   ```
+
+   So we have 58 records need to be filled with a proper value. I might check all the different value already have in the Publisher column of the original df
+
+   ```python
+        # check if Publisher already have value "Unknown":
+        df[df['Publisher'] == "Unknown"]    
+   ```
+   ```python
+        # fill N/a values with "Unknown":
+        df['Publisher'].fillna('Unknown', inplace=True)
+
+        # Check if the Publisher's missing values are all filled successfully:
+        df.isnull().sum()
+   ```
+Result shall be like:
+
+|  | 0 |
+|---:|---|
+| Rank | 0 |
+| Name | 0 |
+| Platform | 0 |
+| Year | 271 |
+| Genre | 0 |
+| Publisher | 0 |
+| NA_Sales | 0 |
+| EU_Sales | 0 |
+| JP_Sales | 0 |
+| Other_Sales | 0 |
+| Global_Sales | 0 |
+| dtype: int64 |
+
+   3b.Handle missing value in Year column:
+   
+There are 2 ways to handle this:
+
+* Remove all the missing year records
+* Research for correct info and input to original df one by one.
+
+In order to do the latter: I can think of fill them with the mode of Year column but the result might be affected. Another way is to mass research their correct years. Considering that it takes time to resolve this issue in latter method, I decided to perform the former.
+
+```python
+# check total number of records that are missing value in year:
+# for review only:
+
+df[df['Year'].isnull() == True]['Rank'].count()
+
+# drop all records with NaN value in Year column:   
+df2 = df.dropna(subset=['Year'])
+df2
+
+# check total null values in df2:
+df2.isnull().sum()
+
+print("Total record left after handling missing values take " ,round(df2.shape[0]/df.shape[0]*100,2), "% of the total one in original df")
+```
+... so we already done with removing missing year record in original df. The new dataframe with shall be used for further EDA should be df2.
 
 5. Perform exploratory checks
 6. Data Cleaning
