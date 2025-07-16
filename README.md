@@ -24,7 +24,6 @@ Source : This dataset is found at Kaggle. You can access to dataset via this lin
     boder-radius: 3px;
     transition: background-color 0.3s ease"> Click here </a>
 
-Format:  CSV file 
 
 <h3> Format and size </h3>  
 
@@ -65,17 +64,12 @@ The project contain such folders as below:
     <li>Summary statistics</li>
     <li>Correlation matrix</li>
     <li>Visualizations (histograms, scatter plots, heatmaps)</li>
-    <li>Feature Engineering</li>
-    <li>Create new variables</li>
-    <li>Select important features</li>
     <li>Statistical Modeling / Machine Learning (Optional)</li>
     <li>Model selection (e.g., regression, classification)</li>
     <li>Evaluation metrics (e.g., accuracy, R²)</li>
     <li>Insight Generation</li>
-    <li>What patterns or recommendations emerge?</li>
-    <li>Tie findings to real-world implications</li>
-    <li>Visualization & Reporting</li>
-    <li>Use Matplotlib, Seaborn, Plotly, or Tableau</li>
+    <li>What patterns or recommendations emerge?</li>    
+    <li>Visualization & Reporting</li>    
     <li>Generate charts for GitHub README or presentation</li>
   </ul>
 </details>
@@ -107,7 +101,7 @@ The project contain such folders as below:
     In this project, I use python script to  download the dataset using Kaggle API. The script is as below:
 
    ```python
-   # Install Kaggle library
+    # Install Kaggle library
     !pip install -q kaggle
 
     # Upload kaggle.json
@@ -122,25 +116,25 @@ The project contain such folders as below:
     # Verify Kaggle API access
     !kaggle datasets list
 
-   # Using Kaggle CLI to download datasets:
+    # Using Kaggle CLI to download datasets:
     !kaggle datasets download -d gregorut/videogamesales
 
-   # Unzip the folder:
+    # Unzip the folder:
     !unzip videogamesales.zip
 
-   # Import python libs & load dataframe:
+    # Import python libs & load dataframe:
    
-   import pandas as pd
-    import numpy as np
-    import matplotlib.pyplot as plt
-    import seaborn as sns
+    import pandas as pd
+     import numpy as np
+     import matplotlib.pyplot as plt
+     import seaborn as sns
 
     df = pd.read_csv('vgsales.csv')
     df.head()
    
     ```
    
-    You can also download the csv file to local folder to use but this shall need to save the file to colab folder each time of reconnect.
+    Otherwise, You can also download the csv file to local folder to use but this shall need to save the file to colab folder each time of reconnect.
 
 
    ```python
@@ -256,37 +250,38 @@ print("Total record left after handling missing values take " ,round(df2.shape[0
 ```
 ... so we already done with removing missing year record in original df. The new dataframe with shall be used for further EDA should be df2.
 
-5. Perform exploratory checks
-6. Data Cleaning
-7. Remove duplicates
-8. Correct types and inconsistencies
-9. Normalize or transform variables
-10. Exploratory Data Analysis (EDA)
-11. Summary statistics
-12. Correlation matrix
-13. Visualizations (histograms, scatter plots, heatmaps)
-14. Feature Engineering
-15. Create new variables
-16. Select important features
-17. Statistical Modeling / Machine Learning (Optional)
-18. Model selection (e.g., regression, classification)
-19. Evaluation metrics (e.g., accuracy, R²)
-20. Insight Generation
-21. What patterns or recommendations emerge?
-22. Tie findings to real-world implications
-23. Visualization & Reporting
-24. Use Matplotlib, Seaborn, Plotly, or Tableau
-25. Generate charts for GitHub README or presentation
+4. Data Cleaning
+   4.1 Check missing values
+   4.2 Standardizing formats
+   4.3 Check & Remove duplicates
+   4.4 Handling outliers
+5. Correct types and inconsistencies
+6. Exploratory Data Analysis (EDA)
+   6.1. Descriptive analyst
+   6.2. Boxplot for numeric columns:
+       6.2.1. Boxplot for Year column
+       6.2.2. Boxplot for Sales columns
+   6.3. Distribution of data
+       6.3.1. Hist for the whole df2
+       6.3.2. Histogram for in platform and gerne? 
+7. Statistical Modeling / Clustering records by sales
+   7.1. Correlation coefficients matrix
+   7.2. Heatmap visualization
+   7.3. Model selection (e.g., regression, classification)
+   7.4. Evaluation metrics (e.g., accuracy, R²)
+   7.5. Insight Generation
+   7.6. What patterns or recommendations emerge?
+8. Tie findings to real-world implications
+9. Visualizations (histograms, scatter plots, heatmaps) & Reporting
+10. GitHub README or selection for presentation
     
-<h3>Dependencies (requirements.txt)</h3>
+<h3>Dependencies </h3>
 
-(upcoming)
+(requirements.txt)
 
-pandas==1.5.3
-
-numpy==1.24.2
-
-matplotlib==3.7.1
+* pandas==1.5.3
+* numpy==1.24.2
+* matplotlib==3.7.1
 
 <h3>Contribution guidelines (if collaborative)</h3>
 
