@@ -527,7 +527,64 @@ print('% data distribution in period 2010 to 2015: ', round(distribution_2010_20
 
 </br>5.3.2. Histogram for in platform and gerne? 
 
-7. Statistical Modeling / Clustering records by sales
+```python
+len(df2['Genre'].unique())
+```
+
+</br> We have total of 12 columns for Genre in this dataset
+
+```python
+platforms = df2['Platform'].unique()
+genres = df2['Genre'].unique()
+
+sns.displot(data=df2,
+            x='Year',
+            #row='Platform',
+            col='Genre',
+            kind='hist',
+            bins=8,
+            height=3,
+            aspect=1.2,
+            palette='viridis',
+            edgecolor='white',
+            col_wrap=4
+            )
+```
+
+<img alt='Histogram-genre' src='docs/genre histograms.png'>
+
+</br> Check the histogram for Platform 
+
+```python
+len(df2['Platform'].unique())
+```
+
+```python
+# Histogram of data distribution over years devided by platforms:
+
+Platform = df2['Platform'].unique()
+
+sns.displot(data=df2,
+            x='Year',
+            #row='',
+            col='Platform',
+            kind='hist',
+            bins=8,
+            height=3,
+            aspect=1.2,
+            palette='viridis',
+            edgecolor='white',
+            col_wrap=5
+            )
+```
+
+<img alt='Histogram-Platform' src='docs/Platform Histograms.png'>
+
+</br> So from the plots we can see that there is a variety in the distribution of data points in years. A number of games in the dataset have a very low publication count, which obscures the details on the histogram.
+
+
+
+6. Statistical Modeling / Clustering records by sales
    </br>6.1. Correlation coefficients matrix
    </br>6.2. Heatmap visualization
    </br>6.3. Model selection (e.g., regression, classification)
@@ -535,9 +592,9 @@ print('% data distribution in period 2010 to 2015: ', round(distribution_2010_20
    </br>6.5. Insight Generation
    </br>6.6. What patterns or recommendations emerge?
 
-8. Tie findings to real-world implications
-9. Visualizations (histograms, scatter plots, heatmaps) & Reporting
-10. GitHub README or selection for presentation
+7. Tie findings to real-world implications
+8. Visualizations (histograms, scatter plots, heatmaps) & Reporting
+9. GitHub README or selection for presentation
     
 <h3>Dependencies </h3>
 
